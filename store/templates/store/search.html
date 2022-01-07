@@ -1,0 +1,46 @@
+{% extends 'store/base/base.html' %}
+{% load static %}
+{% block title %}
+    Buscar: {{ query }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3 pt-3">
+        <div class="col">
+            <h4 class="mt-4 mb-3">Resultados para <b>{{ query }}</b></h4>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ product.image.url }}"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title text-secondary">
+                                    <a href="#" class="text-secondary" title="View Product">{{ product.name }}</a>
+                                </h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="text-primary">S/ {{ product.price }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#" class="btn btn-success btn-block">Agregar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12  mb-3 alert alert-info">
+                        Sin resultados :(
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

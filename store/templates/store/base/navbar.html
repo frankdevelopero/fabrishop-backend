@@ -1,0 +1,70 @@
+<header class="header header-border">
+
+    <div class="header-middle sticky-header fix-top sticky-content">
+        <div class="container">
+            <div class="header-left">
+                <a href="#" class="mobile-menu-toggle">
+                    <i class="d-icon-bars2"></i>
+                </a>
+                <a href="{% url 'index_slug_store' store.slug %}" class="logo">
+                    <img src="{{ store.image.url }}" alt="logo" width="153" height="30"/>
+                </a>
+
+
+                <div class="header-search hs-simple">
+                    <form action="#" class="input-wrapper">
+                        <input type="text" class="form-control" name="search" autocomplete="off"
+                               placeholder="Search..." required/>
+                        <button class="btn btn-search" type="submit">
+                            <i class="d-icon-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="header-right">
+                <a href="tel:#" class="icon-box icon-box-side">
+                    <div class="icon-box-icon mr-0 mr-lg-2">
+                        <i class="d-icon-phone"></i>
+                    </div>
+                    <div class="icon-box-content d-lg-show">
+                        <h4 class="icon-box-title">Escríbenos:</h4>
+                        <p>+51 925923244</p>
+                    </div>
+                </a>
+
+                <span class="divider"></span>
+                <div class="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
+                    <a href="{% url 'cart_slug' store.slug %}" class="label-block link">
+                        <div class="cart-label d-lg-show">
+                            <span class="cart-name">Mi carrito:</span>
+                            <span class="cart-price">{{ store.currency }} 120.00</span>
+                        </div>
+                        <i class="d-icon-bag"><span class="cart-count">2</span></i>
+                    </a>
+                    <div class="cart-overlay"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-bottom d-lg-show">
+        <div class="container">
+            <div class="header-left">
+                <nav class="main-nav">
+                    <ul class="menu">
+                        <li class="{% if request.path ==  "/" %}active{% endif %}">
+                            <a href="{% url 'index_slug_store' store.slug %}">Inicio</a>
+                        </li>
+                        {% for category in categories %}
+                            <li  class="{% if request.path ==   "/categoria/"|add:category.slug %}active{% endif %} ">
+                                <a href="{% url 'category_slug_detail' store.slug category.slug %}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

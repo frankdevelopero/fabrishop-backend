@@ -1,0 +1,74 @@
+{% extends 'store/base/base.html' %}
+{% load static %}
+{% block title %}
+    Explorar nuestro catálogo
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+        <div class="page-content">
+            {% for category in categories %}
+                {% if category.products.all %}
+                    <section class="product-wrapper container appear-animate mt-6 mt-md-10 pt-4 pb-8">
+                        <h2 class="title title-center mb-5">{{ category.name }}</h2>
+                        <div class="owl-carousel owl-theme row owl-nav-full cols-2 cols-md-3 cols-lg-4"
+                             data-owl-options="{
+                        'items': 5,
+                        'nav': false,
+                        'loop': false,
+                        'dots': true,
+                        'margin': 20,
+                        'responsive': {
+                            '0': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 3
+                            },
+                            '992': {
+                                'items': 4,
+                                'dots': false,
+                                'nav': true
+                            }
+                        }
+                    }">
+                            {% for prod in category.products.all %}
+                                <div class="product text-center">
+                                    <figure class="product-media">
+                                        <a href="{% url 'product_slug' store.slug prod.id %}">
+                                            <img src="{{ prod.image.url}}"
+                                                 alt="Blue Pinafore Denim Dress"
+                                                 width="280" height="315" style="background-color: #f2f3f5;"/>
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                               data-target="#addCartModal" title="Add to cart"><i
+                                                    class="d-icon-bag"></i></a>
+                                        </div>
+
+                                    </figure>
+                                    <div class="product-details">
+
+                                        <h3 class="product-name">
+                                            <a href="{% url 'product_slug' store.slug prod.id %}">{{ prod.name }}</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <span class="price">{{ prod.currency}} {{ prod.price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+    </main>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

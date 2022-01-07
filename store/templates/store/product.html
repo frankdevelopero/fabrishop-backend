@@ -1,0 +1,158 @@
+{% extends 'store/base/base.html' %}
+{% load static %}
+{% block title %}
+    Las mejores ofertas en tecnología
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'front/vendor/photoswipe/photoswipe.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'front/vendor/photoswipe/default-skin/default-skin.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'front/css/style.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="main mt-6 single-product">
+        <div class="page-content mb-10 pb-6">
+            <div class="container">
+                <div class="product product-single row mb-7">
+                    <div class="col-md-6 sticky-sidebar-wrapper">
+                        <div class="product-gallery pg-vertical sticky-sidebar"
+                             data-sticky-options="{'minWidth': 767}">
+                            <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
+                                <figure class="product-image">
+                                    <img src="{{ product.image.url }}"
+                                         data-zoom-image="{{ product.image.url }}"
+                                         alt="{{ product.name}}" width="800" height="900">
+                                </figure>
+                                {% for foo in product.gallery_set.all %}
+                                    <figure class="product-image">
+                                        <img src="{{ foo.image.url }}"
+                                             data-zoom-image="{{ foo.image.url }}"
+                                             alt="{{ product.name}}" width="800" height="900">
+                                    </figure>
+                                {% endfor %}
+
+
+                            </div>
+                            <div class="product-thumbs-wrap">
+                                <div class="product-thumbs">
+                                    <div class="product-thumb active">
+                                        <img src="{{ product.image.url }}" alt="{{ product.name}}"
+                                             width="109" height="122">
+                                    </div>
+                                    {% for foo in product.gallery_set.all %}
+                                    <div class="product-thumb">
+                                        <img src="{{ foo.image.url }}" alt="{{ product.name}}"
+                                             width="109" height="122">
+                                    </div>
+                                    {% endfor %}
+
+                                </div>
+                                <button class="thumb-up disabled"><i class="fas fa-chevron-left"></i></button>
+                                <button class="thumb-down disabled"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-details">
+                            <div class="product-navigation">
+                                <ul class="breadcrumb breadcrumb-lg">
+                                    <li><a href="demo1.html"><i class="d-icon-home"></i></a></li>
+                                    <li><a href="{% url 'index_slug_store' store.slug %}" class="active">Inicio</a></li>
+                                    <li>Producto</li>
+                                    <li>{{ product.name }}</li>
+                                </ul>
+
+                            </div>
+
+                            <h1 class="product-name">{{ product.name }}</h1>
+
+                            <div class="product-price">{{ store.currency }} {{ product.price }}</div>
+
+                            <p class="product-short-desc">{{ product.description }}</p>
+
+
+                            <hr class="product-divider">
+
+                            <div class="product-form product-qty">
+                                <div class="product-form-group">
+                                    <div class="input-group mr-2">
+                                        <button class="quantity-minus d-icon-minus"></button>
+                                        <input class="quantity form-control" type="number" min="1" max="1000000">
+                                        <button class="quantity-plus d-icon-plus"></button>
+                                    </div>
+                                    <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                                        <i class="d-icon-bag"></i>Agregar al carrito
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <section class="pt-3 mt-10">
+                    <h2 class="title justify-content-center">Productos relacionados</h2>
+
+                    <div class="owl-carousel owl-theme owl-nav-full row cols-2 cols-md-3 cols-lg-4"
+                         data-owl-options="{
+							'items': 5,
+							'nav': false,
+							'loop': false,
+							'dots': true,
+							'margin': 20,
+							'responsive': {
+								'0': {
+									'items': 2
+								},
+								'768': {
+									'items': 3
+								},
+								'992': {
+									'items': 4,
+									'dots': false,
+									'nav': true
+								}
+							}
+						}">
+                        {% for product in products %}
+                            <div class="product">
+                            <figure class="product-media">
+                                <a href="{% url 'product_slug' store.slug product.id %}">
+                                    <img src="{{ product.image.url}}" alt="product" width="280" height="315">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                       data-target="#addCartModal" title="Agregar al carrito"><i
+                                            class="d-icon-bag"></i></a>
+                                </div>
+
+                            </figure>
+                            <div class="product-details">
+
+                                <h3 class="product-name">
+                                    <a href="{% url 'product_slug' store.slug product.id %}">{{ product.name}}</a>
+                                </h3>
+                                <div class="product-price">
+                                    <span class="price">{{ store.currency }} {{product.price}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'front/vendor/photoswipe/photoswipe.min.js' %}"></script>
+    <script src="{% static 'front/vendor/photoswipe/photoswipe-ui-default.min.js' %}"></script>
+    <script src="{% static 'front/vendor/sticky/sticky.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'store/base/base.html' %}
+{% load static %}
+{% block title %}
+    {{ category.name }}
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+        <div class="page-content">
+            <section class="product-wrapper container appear-animate mt-6 mt-md-10 pt-4 pb-8 text-left" data-animation-options="{
+                    'delay': '.3s'
+                }">
+                <h2 class="title title-center mb-5">{{ category.name }}</h2>
+
+                <div class="owl-carousel owl-theme row owl-nav-full cols-2 cols-md-3 cols-lg-4"
+                     data-owl-options="{
+                        'items': 5,
+                        'nav': false,
+                        'loop': false,
+                        'dots': true,
+                        'margin': 20,
+                        'responsive': {
+                            '0': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 3
+                            },
+                            '992': {
+                                'items': 4,
+                                'dots': false,
+                                'nav': true
+                            }
+                        }
+                    }">
+                    {% for product in products %}
+                        <div class="product text-center border">
+                            <figure class="product-media">
+                                <a href="{% url 'product_slug' store.slug product.id %}">
+                                    <img src="{{ product.image.url }}"
+                                         alt="Blue Pinafore Denim Dress"
+                                         width="280" height="315" style="background-color: #f2f3f5;"/>
+                                </a>
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                       data-target="#addCartModal" title="Agregar al carrito"><i
+                                            class="d-icon-bag"></i></a>
+
+                                </div>
+
+                            </figure>
+                            <div class="product-details">
+                                <h3 class="product-name">
+                                    <a href="{% url 'product_slug' store.slug product.id %}">{{ product.name }}</a>
+                                </h3>
+                                <div class="product-price">
+                                    <span class="price">{{ store.currency }} {{ product.price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="container mt-3 pt-3">
+        <div class="col" id="loadhome">
+        </div>
+        <div class="d-flex justify-content-center mt-3 text-primary" id="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'store/js/store.js' %}"></script>
+    <script>
+        $(function () {
+            let slug = "{{ store.slug }}"
+            let currency = "{{ store.currency }}"
+            loadHome({{ store.id }}, slug, currency);
+        });
+
+    </script>
+{% endblock %}
